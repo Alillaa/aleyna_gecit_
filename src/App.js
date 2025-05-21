@@ -14,13 +14,13 @@ import {
 import AnimatedElement from './components/AnimatedElement/AnimatedElement.js';
 import { ButterflySVG as OriginalButterflySVG, FlowerSVG as OriginalFlowerSVG } from './components/SVGIcons/SVGIcons.js';
 
-// === RESİM IMPORTLARI EKLENDİ ===
-import profilResmi from './resim/aleyna-profil.jpg';
+// Resim importları
 import webImg from './resim/web.png';
 import notDefteriImg from './resim/not_defteri.png';
 import soruBankasiImg from './resim/soru_bankasi.png';
 import gunlukImg from './resim/gunluk.png';
-// ================================
+import profilResmi from './resim/aleyna-profil.jpg';
+
 
 // Hero bölümü için yeni pastel teknoloji ikonu bileşeni
 const PastelTechIcon = ({ icon: IconComponent, initialX, initialY, size, color, delay }) => {
@@ -226,38 +226,10 @@ const App = () => {
   }, []);
 
   const projectsData = [
-    {
-      title: 'Mini Soru Bankası',
-      desc: 'Kullanıcıların çeşitli konularda sorular oluşturup pratik yapabileceği interaktif bir soru bankası platformu.',
-      img: soruBankasiImg,
-      tags: ['Python', 'PyQt5', 'QtDesigner'],
-      githubLink: 'https://github.com/Alillaa/soru_bankasi',
-      demoLink: null
-    },
-    {
-      title: 'Kişisel Asistanım',
-      desc: 'Çeşitli günlük aktiviteleri takip etmeye ve yönetmeye yardımcı olan kişisel asistan uygulaması.',
-      img: gunlukImg,
-      tags: ['Python', 'PyQt5', 'QtDesigner'],
-      githubLink: 'https://github.com/Alillaa/kisisel_asistan',
-      demoLink: null
-    },
-    {
-      title: 'Not Defteri',
-      desc: 'Kullanıcıların hızlıca notlar almasını ve düzenlemesini sağlayan, çiçek temalı bir not defteri uygulaması.',
-      img: notDefteriImg,
-      tags: ['Python', 'PyQt5', 'QtDesigner'],
-      githubLink: 'https://github.com/Alillaa/not_defteri',
-      demoLink: null
-    },
-    {
-      title: 'Kişisel Portfolyo Sitesi',
-      desc: 'React, Tailwind CSS ve GSAP animasyonları ile kendimi ve çalışmalarımı tanıttığım bu interaktif web sitesi.',
-      img: webImg,
-      tags: ['React', 'HTML', 'CSS'],
-      githubLink: 'https://github.com/Alillaa/aleyna_gecit_',
-      demoLink: '#'
-    },
+    { title: 'Mini Soru Bankası', desc: 'Kullanıcıların çeşitli konularda sorular oluşturup pratik yapabileceği interaktif bir soru bankası platformu.', img: soruBankasiImg, tags: ['Python', 'PyQt5', 'QtDesigner'], githubLink: 'https://github.com/Alillaa/soru_bankasi', demoLink: null },
+    { title: 'Kişisel Asistanım', desc: 'Çeşitli günlük aktiviteleri takip etmeye ve yönetmeye yardımcı olan kişisel asistan uygulaması.', img: gunlukImg, tags: ['Python', 'PyQt5', 'QtDesigner'], githubLink: 'https://github.com/Alillaa/kisisel_asistan', demoLink: null },
+    { title: 'Not Defteri', desc: 'Kullanıcıların hızlıca notlar almasını ve düzenlemesini sağlayan, çiçek temalı bir not defteri uygulaması.', img: notDefteriImg, tags: ['Python', 'PyQt5', 'QtDesigner'], githubLink: 'https://github.com/Alillaa/not_defteri', demoLink: null },
+    { title: 'Kişisel Portfolyo Sitesi', desc: 'React, Tailwind CSS ve GSAP animasyonları ile kendimi ve çalışmalarımı tanıttığım bu interaktif web sitesi.', img: webImg, tags: ['React', 'HTML', 'CSS'], githubLink: 'https://github.com/Alillaa/aleyna_gecit_', demoLink: '#' },
   ];
 
 
@@ -374,14 +346,14 @@ const App = () => {
               <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
                 <div className="relative group">
                   <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-400 to-purple-500 rounded-lg blur opacity-50 group-hover:opacity-60 transition duration-1000 group-hover:duration-200 animate-tilt dark:from-pink-500/50 dark:to-purple-600/50"></div>
-
                   <img
                       src={profilResmi}
                       alt="Aleyna Geçit Profil Resmi"
-                      className="rounded-lg shadow-xl max-w-sm mx-auto relative z-10 object-cover h-auto md:h-auto" // DEĞİŞİKLİK BURADA: max-w-xs -> max-w-sm
+                      className="rounded-lg shadow-xl w-full max-w-sm mx-auto relative z-10 object-cover h-auto md:h-auto" // max-w-sm olarak güncellendi
                       onError={(e) => {
                         console.error("Profil resmi yüklenemedi:", e);
                         e.target.alt = "Profil resmi yüklenemedi";
+                        e.target.src='https://placehold.co/600x600/E9D5FF/4A044E?text=Resim+Bulunamadı';
                       }}
                   />
                   <OriginalButterflySVG className="w-12 h-12 text-purple-500 dark:text-pink-300/80 absolute bottom-4 right-4 transform rotate-12 opacity-70 group-hover:opacity-100 transition-opacity" />
@@ -394,17 +366,38 @@ const App = () => {
                 </div>
               </div>
 
+              {/* "KISA BİLGİLER" BÖLÜMÜ GÜNCELLENDİ */}
               <div className="grid md:grid-cols-2 gap-x-12 gap-y-10 pt-10 border-t border-gray-200 dark:border-slate-700 mb-16">
                 <div className="bg-white/50 dark:bg-slate-800/60 p-6 rounded-xl shadow-lg">
                   <h3 className="text-2xl font-semibold mb-4 text-pink-600 dark:text-pink-400 flex items-center">
                     <Info size={24} className="mr-2" /> Kısa Bilgiler
                   </h3>
                   <div className="space-y-3 text-gray-700 dark:text-gray-300">
-                    <p className="flex items-start"><Cake size={18} className="mr-2 mt-1 text-pink-500 dark:text-pink-400 flex-shrink-0" /> <strong className="font-medium w-32 flex-shrink-0">Doğum Tarihi:</strong> 07.01.2003</p>
-                    <p className="flex items-start"><MapPin size={18} className="mr-2 mt-1 text-pink-500 dark:text-pink-400 flex-shrink-0" /> <strong className="font-medium w-32 flex-shrink-0">Doğum Yeri:</strong> Malatya/Battalgazi</p>
-                    <p className="flex items-start"><Mailbox size={18} className="mr-2 mt-1 text-pink-500 dark:text-pink-400 flex-shrink-0" /> <strong className="font-medium w-32 flex-shrink-0">E-posta:</strong> aleynagecit4550@gmail.com</p>
-                    <p className="flex items-start"><MapPinned size={18} className="mr-2 mt-1 text-pink-500 dark:text-pink-400 flex-shrink-0" /> <strong className="font-medium w-32 flex-shrink-0">Konum:</strong> Balıkesir/Bigadiç, Türkiye</p>
-                    <p className="flex items-start"><Dna size={18} className="mr-2 mt-1 text-pink-500 dark:text-pink-400 flex-shrink-0" /> <strong className="font-medium w-32 flex-shrink-0">İlgi Alanları:</strong> Siber Güvenlik, Teknoloji, Görsel Sanatlar...</p>
+                    <p className="flex items-start">
+                      <Cake size={18} className="mr-3 mt-1 text-pink-500 dark:text-pink-400 flex-shrink-0" />
+                      <strong className="font-medium mr-2">Doğum Tarihi:</strong>
+                      <span className="break-words">07.01.2003</span>
+                    </p>
+                    <p className="flex items-start">
+                      <MapPin size={18} className="mr-3 mt-1 text-pink-500 dark:text-pink-400 flex-shrink-0" />
+                      <strong className="font-medium mr-2">Doğum Yeri:</strong>
+                      <span className="break-words">Malatya/Battalgazi</span>
+                    </p>
+                    <p className="flex items-start">
+                      <Mailbox size={18} className="mr-3 mt-1 text-pink-500 dark:text-pink-400 flex-shrink-0" />
+                      <strong className="font-medium mr-2">E-posta:</strong>
+                      <span className="break-words">aleynagecit4550@gmail.com</span>
+                    </p>
+                    <p className="flex items-start">
+                      <MapPinned size={18} className="mr-3 mt-1 text-pink-500 dark:text-pink-400 flex-shrink-0" />
+                      <strong className="font-medium mr-2">Konum:</strong>
+                      <span className="break-words">Balıkesir/Bigadiç, Türkiye</span>
+                    </p>
+                    <p className="flex items-start">
+                      <Dna size={18} className="mr-3 mt-1 text-pink-500 dark:text-pink-400 flex-shrink-0" />
+                      <strong className="font-medium mr-2">İlgi Alanları:</strong>
+                      <span className="break-words">Siber Güvenlik, Teknoloji, Görsel Sanatlar...</span>
+                    </p>
                   </div>
                 </div>
 
