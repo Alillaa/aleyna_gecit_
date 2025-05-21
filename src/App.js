@@ -117,16 +117,20 @@ const App = () => {
 
   useEffect(() => {
     if (subtitleIndex < fullSubtitle.length) {
-      setShowTypingCursor(true);
+      setShowTypingCursor(true); // Yazarken imleç hep görünsün
       const timeoutId = setTimeout(() => {
         setTypedSubtitle((prev) => prev + fullSubtitle.charAt(subtitleIndex));
         setSubtitleIndex((prev) => prev + 1);
-      }, 120);
+      }, 120); // Yazma hızı (milisaniye)
       return () => clearTimeout(timeoutId);
     } else {
-      // İmleç yanıp sönmeye devam etsin (CSS ile)
+      // Yazma bittikten sonra imleci gizle
+      const cursorHideTimeout = setTimeout(() => {
+        setShowTypingCursor(false);
+      }, 200); // Yazı bittikten 0,2 saniye sonra imleci gizle (bu süreyi ayarlayabilirsiniz)
+      return () => clearTimeout(cursorHideTimeout);
     }
-  }, [subtitleIndex, fullSubtitle]);
+  }, [subtitleIndex, fullSubtitle, fullSubtitle.length]); // fullSubtitle.length'i bağımlılığa ekledim
 
   useEffect(() => {
     if (heroContentRef.current) {
@@ -321,7 +325,7 @@ const App = () => {
               </h1>
               <p className="text-xl sm:text-2xl text-gray-700 dark:text-gray-300 mb-8 h-14 sm:h-auto opacity-0" style={{ transform: 'translateY(50px)' }}>
                 {typedSubtitle}
-                <span className={`typing-cursor ${!showTypingCursor && subtitleIndex === fullSubtitle.length ? 'hidden' : ''}`}>|</span>
+                {showTypingCursor && <span className="typing-cursor">|</span>} {/* Sadece showTypingCursor true ise göster */}
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 opacity-0" style={{ transform: 'translateY(50px)' }}>
                 <button onClick={() => scrollToSection('about')} className="bg-pink-500 hover:bg-pink-600 dark:bg-pink-600 dark:hover:bg-pink-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-300 text-lg inline-flex items-center justify-center w-full sm:w-auto">
