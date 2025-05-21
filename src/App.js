@@ -13,10 +13,14 @@ import {
 // Dosya yapınıza göre import yolları:
 import AnimatedElement from './components/AnimatedElement/AnimatedElement.js';
 import { ButterflySVG as OriginalButterflySVG, FlowerSVG as OriginalFlowerSVG } from './components/SVGIcons/SVGIcons.js';
+
+// === RESİM IMPORTLARI EKLENDİ ===
+import profilResmi from './resim/aleyna-profil.jpg';
 import webImg from './resim/web.png';
 import notDefteriImg from './resim/not_defteri.png';
 import soruBankasiImg from './resim/soru_bankasi.png';
 import gunlukImg from './resim/gunluk.png';
+// ================================
 
 // Hero bölümü için yeni pastel teknoloji ikonu bileşeni
 const PastelTechIcon = ({ icon: IconComponent, initialX, initialY, size, color, delay }) => {
@@ -35,7 +39,7 @@ const PastelTechIcon = ({ icon: IconComponent, initialX, initialY, size, color, 
 
     gsap.to(el, {
       scale: 1,
-      opacity: gsap.utils.random(0.4, 0.8), // Opaklık biraz artırıldı
+      opacity: gsap.utils.random(0.4, 0.8),
       duration: 1.5,
       delay: delay + gsap.utils.random(0, 1.5),
       ease: 'power2.out',
@@ -72,7 +76,6 @@ const technicalSkillsForBenKimim = [
   'C#', 'React', 'Java', 'JavaScript', 'HTML', 'CSS', 'SQL', 'Git', 'Fusion360', 'Python (PyQt5)'
 ];
 
-// Hero bölümü için pastel teknoloji ikonları verisi
 const pastelTechIconsData = [
   { icon: Code, size: 40, color: 'rgba(251, 146, 158, 0.7)', initialX: '15vw', initialY: '25vh', delay: 0.1 },
   { icon: Cpu, size: 30, color: 'rgba(196, 181, 253, 0.7)', initialX: '80vw', initialY: '15vh', delay: 0.3 },
@@ -125,14 +128,13 @@ const App = () => {
     }
   }, [subtitleIndex, fullSubtitle]);
 
-  // HERO İÇERİK GİRİŞ ANİMASYONU - DELAY GÜNCELLENDİ
   useEffect(() => {
     if (heroContentRef.current) {
       const children = Array.from(heroContentRef.current.children);
       if (children.length >=3) {
         gsap.set(children, { autoAlpha: 0, y: 50 });
         gsap.to(children, {
-          autoAlpha: 1, y: 0, duration: 0.8, stagger: 0.2, ease: 'power3.out', delay: 0.5, // GECİKME 1.5'TAN 0.5'E DÜŞÜRÜLDÜ
+          autoAlpha: 1, y: 0, duration: 0.8, stagger: 0.2, ease: 'power3.out', delay: 0.5,
         });
       }
     }
@@ -227,15 +229,15 @@ const App = () => {
     {
       title: 'Mini Soru Bankası',
       desc: 'Kullanıcıların çeşitli konularda sorular oluşturup pratik yapabileceği interaktif bir soru bankası platformu.',
-      img: soruBankasiImg, // İçe aktarılan resmi kullan
+      img: soruBankasiImg,
       tags: ['Python', 'PyQt5', 'QtDesigner'],
       githubLink: 'https://github.com/Alillaa/soru_bankasi',
       demoLink: null
     },
     {
       title: 'Kişisel Asistanım',
-      desc: 'Çeşitli günlük aktiviteleri takip etmeye ve yönetmeye yardımcı olan kişisel asistan uygulaması. (Bu proje için "gunluk.png" kullanıldı)',
-      img: gunlukImg, // İçe aktarılan resmi kullan
+      desc: 'Çeşitli günlük aktiviteleri takip etmeye ve yönetmeye yardımcı olan kişisel asistan uygulaması.',
+      img: gunlukImg,
       tags: ['Python', 'PyQt5', 'QtDesigner'],
       githubLink: 'https://github.com/Alillaa/kisisel_asistan',
       demoLink: null
@@ -243,7 +245,7 @@ const App = () => {
     {
       title: 'Not Defteri',
       desc: 'Kullanıcıların hızlıca notlar almasını ve düzenlemesini sağlayan, çiçek temalı bir not defteri uygulaması.',
-      img: notDefteriImg, // İçe aktarılan resmi kullan
+      img: notDefteriImg,
       tags: ['Python', 'PyQt5', 'QtDesigner'],
       githubLink: 'https://github.com/Alillaa/not_defteri',
       demoLink: null
@@ -251,7 +253,7 @@ const App = () => {
     {
       title: 'Kişisel Portfolyo Sitesi',
       desc: 'React, Tailwind CSS ve GSAP animasyonları ile kendimi ve çalışmalarımı tanıttığım bu interaktif web sitesi.',
-      img: webImg, // İçe aktarılan resmi kullan
+      img: webImg,
       tags: ['React', 'HTML', 'CSS'],
       githubLink: 'https://github.com/Alillaa/aleyna_gecit_',
       demoLink: '#'
@@ -270,7 +272,6 @@ const App = () => {
             <div className="flex items-center justify-between h-16">
               <div className="flex items-center">
                 <OriginalFlowerSVG className="w-8 h-8 text-pink-500 dark:text-pink-400 mr-2" />
-                {/* HEADER BAŞLIĞI STİLİ GÜNCELLENDİ */}
                 <span className="text-xl font-bold text-purple-600 dark:text-purple-400">Aleyna Geçit</span>
               </div>
               <nav className="hidden md:flex space-x-1">
@@ -341,7 +342,6 @@ const App = () => {
             ))}
 
             <div ref={heroContentRef} className="text-center z-20 bg-white/70 dark:bg-slate-800/80 backdrop-blur-sm p-8 md:p-12 rounded-xl shadow-2xl relative">
-              {/* HERO BAŞLIĞI STİLİ GÜNCELLENDİ */}
               <h1 ref={heroTitleRef} className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-4 opacity-0" style={{ transform: 'translateY(50px)' }}>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-rose-500 to-fuchsia-600 dark:from-pink-400 dark:via-rose-400 dark:to-fuchsia-500">
                 Aleyna Geçit
@@ -374,11 +374,15 @@ const App = () => {
               <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
                 <div className="relative group">
                   <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-400 to-purple-500 rounded-lg blur opacity-50 group-hover:opacity-60 transition duration-1000 group-hover:duration-200 animate-tilt dark:from-pink-500/50 dark:to-purple-600/50"></div>
+
                   <img
-                      src={process.env.PUBLIC_URL + '/aleyna-profil.jpg'}
+                      src={profilResmi}
                       alt="Aleyna Geçit Profil Resmi"
-                      className="rounded-lg shadow-xl w-full max-w-md mx-auto relative z-10 object-cover h-96 md:h-auto"
-                      onError={(e) => e.target.src='https://placehold.co/600x600/E9D5FF/4A044E?text=Aleyna+Ge%C3%A7it'}
+                      className="rounded-lg shadow-xl max-w-sm mx-auto relative z-10 object-cover h-auto md:h-auto" // DEĞİŞİKLİK BURADA: max-w-xs -> max-w-sm
+                      onError={(e) => {
+                        console.error("Profil resmi yüklenemedi:", e);
+                        e.target.alt = "Profil resmi yüklenemedi";
+                      }}
                   />
                   <OriginalButterflySVG className="w-12 h-12 text-purple-500 dark:text-pink-300/80 absolute bottom-4 right-4 transform rotate-12 opacity-70 group-hover:opacity-100 transition-opacity" />
                 </div>
