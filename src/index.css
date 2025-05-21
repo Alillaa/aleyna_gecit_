@@ -1,0 +1,33 @@
+/* Tailwind CSS Direktifleri */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* App.js'deki <style jsx global> içindeki stiller buraya taşınabilir */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .animate-tilt {
+    animation: tilt 10s infinite linear;
+  }
+}
+
+@keyframes tilt {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(0.5deg); }
+  75% { transform: rotate(-0.5deg); }
+}
+
+/* Animasyonlu elemanların içeriğin önüne geçmemesi için */
+.will-change-transform {
+  will-change: transform, opacity; /* Tarayıcıya ipucu verir */
+}
+
+/* Gerekirse diğer global stiller buraya eklenebilir */
+body {
+  @apply antialiased; /* Tailwind'in antialiasing özelliğini kullan */
+}
