@@ -1,63 +1,56 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-// Phone ikonu eklendi
-import { Home, User, Code, Mail, Linkedin, Github, Twitter, Menu, X, Sun, Moon, ChevronsDown, ArrowUpCircle, Sparkles, Send, MapPin, CalendarDays, Globe, Instagram, Info, MessageSquare, Briefcase, BookOpen, Target, Dna, MapPinned, Mailbox, Cake, GraduationCap, Braces, Orbit, Terminal, Palette, FileCode as LucideFileCode, Wind, Hexagon, Play, Lightbulb, Users, Database, ShieldCheck, Brain, Layers, Phone } from 'lucide-react';
+import {
+  Home, User, Code, Mail, Linkedin, Github, Twitter, Menu, X, Sun, Moon,
+  ChevronsDown, ArrowUpCircle, Sparkles, Send, MapPin, CalendarDays, Globe,
+  Instagram, Info, MessageSquare, BookOpen, Target, Dna, MapPinned, Mailbox,
+  Cake, GraduationCap, Braces, Orbit, Terminal, Palette, FileCode as LucideFileCode,
+  Wind, Play, Lightbulb, Users, Database, ShieldCheck, Brain, Layers,
+  Cpu, GitBranch, Binary, FunctionSquare, Settings2, Puzzle, Phone
+} from 'lucide-react';
 
 // Dosya yapınıza göre import yolları:
 import AnimatedElement from './components/AnimatedElement/AnimatedElement.js';
 import { ButterflySVG as OriginalButterflySVG, FlowerSVG as OriginalFlowerSVG } from './components/SVGIcons/SVGIcons.js';
 
+// YENİ EKLENEN RESİM IMPORTLARI
+import webImg from './resim/web.png';
+import notDefteriImg from './resim/not_defteri.png';
+import soruBankasiImg from './resim/soru_bankasi.png';
+import gunlukImg from './resim/gunluk.png';
+
+
 const capabilitiesData = [
-  {
-    title: "Web Geliştirme (Frontend Ağırlıklı)",
-    description: "Modern web teknolojileri (React, JavaScript, HTML, CSS) kullanarak etkileşimli, kullanıcı dostu arayüzler ve dinamik web uygulamaları geliştirme.",
-    icon: <Layers size={36} className="text-pink-500 dark:text-pink-400 mb-4" />,
-    color: "pink"
-  },
-  {
-    title: "Veritabanı Tasarımı ve Yönetimi",
-    description: "İlişkisel veritabanı (SQL) prensipleriyle veri modelleme, sorgulama ve temel veritabanı yönetimi konularında yetkinlik.",
-    icon: <Database size={36} className="text-purple-500 dark:text-purple-400 mb-4" />,
-    color: "purple"
-  },
-  {
-    title: "Siber Güvenlik Yaklaşımı",
-    description: "Yazılım geliştirme süreçlerinde güvenlik prensiplerine dikkat etme, potansiyel zafiyetler konusunda farkındalık ve güvenli kodlama pratiklerine ilgi.",
-    icon: <ShieldCheck size={36} className="text-green-500 dark:text-green-400 mb-4" />,
-    color: "green"
-  },
-  {
-    title: "Algoritmik Problem Çözme",
-    description: "Karşılaşılan mühendislik problemlerine analitik ve algoritmik düşünme becerileriyle yaklaşarak verimli ve optimize çözümler üretme.",
-    icon: <Brain size={36} className="text-sky-500 dark:text-sky-400 mb-4" />,
-    color: "sky"
-  },
+  { title: "Web Geliştirme (Frontend Ağırlıklı)", description: "Modern web teknolojileri (React, JavaScript, HTML, CSS) kullanarak etkileşimli, kullanıcı dostu arayüzler ve dinamik web uygulamaları geliştirme.", icon: <Layers size={36} className="text-pink-500 dark:text-pink-400 mb-4" />, color: "pink" },
+  { title: "Veritabanı Tasarımı ve Yönetimi", description: "İlişkisel veritabanı (SQL) prensipleriyle veri modelleme, sorgulama ve temel veritabanı yönetimi konularında yetkinlik.", icon: <Database size={36} className="text-purple-500 dark:text-purple-400 mb-4" />, color: "purple" },
+  { title: "Siber Güvenlik Yaklaşımı", description: "Yazılım geliştirme süreçlerinde güvenlik prensiplerine dikkat etme, potansiyel zafiyetler konusunda farkındalık ve güvenli kodlama pratiklerine ilgi.", icon: <ShieldCheck size={36} className="text-green-500 dark:text-green-400 mb-4" />, color: "green" },
+  { title: "Algoritmik Problem Çözme", description: "Karşılaşılan mühendislik problemlerine analitik ve algoritmik düşünme becerileriyle yaklaşarak verimli ve optimize çözümler üretme.", icon: <Brain size={36} className="text-sky-500 dark:text-sky-400 mb-4" />, color: "sky" },
 ];
 
 const technicalSkillsForBenKimim = [
   'C#', 'React', 'Java', 'JavaScript', 'HTML', 'CSS', 'SQL', 'Git', 'Fusion360', 'Python (PyQt5)'
 ];
 
-const HeroBackgroundShape = ({ className, initialX, initialY, delay }) => {
-  const shapeRef = useRef(null);
+const PastelTechIcon = ({ icon: IconComponent, initialX, initialY, size, color, delay }) => {
+  const iconRef = useRef(null);
+
   useEffect(() => {
-    const el = shapeRef.current;
+    const el = iconRef.current;
     if (!el) return;
-    gsap.set(el, { x: initialX, y: initialY, scale: gsap.utils.random(0.5, 1.2), opacity: 0 });
-    gsap.to(el, { opacity: gsap.utils.random(0.1, 0.3), duration: 2, delay: delay + 0.5, ease: 'power2.inOut' });
+    gsap.set(el, { x: initialX, y: initialY, scale: 0, opacity: 0 });
+    gsap.to(el, { scale: 1, opacity: gsap.utils.random(0.4, 0.8), duration: 1.5, delay: delay + gsap.utils.random(0, 1.5), ease: 'power2.out' });
     gsap.to(el, {
-      x: `+=${gsap.utils.random(-100, 100)}`, y: `+=${gsap.utils.random(-100, 100)}`, rotation: gsap.utils.random(-30, 30),
-      scale: `+=${gsap.utils.random(-0.2, 0.2)}`, duration: gsap.utils.random(20, 40),
-      repeat: -1, yoyo: true, ease: 'sine.inOut', delay: delay + 2.5,
+      x: `+=${gsap.utils.random(-30, 30)}`, y: `+=${gsap.utils.random(-30, 30)}`, rotation: `+=${gsap.utils.random(-45, 45)}`,
+      duration: gsap.utils.random(25, 50), repeat: -1, yoyo: true, ease: 'sine.inOut', delay: delay + 1.5,
     });
-  }, [initialX, initialY, delay]);
+  }, [initialX, initialY, size, color, delay]);
+
   return (
-      <div ref={shapeRef} className={`absolute -z-10 ${className}`}>
-        <Hexagon size={gsap.utils.random(80, 200)} strokeWidth={0.5} className="text-pink-300 dark:text-pink-700" />
+      <div ref={iconRef} className="absolute -z-10 pointer-events-none" style={{ color }}>
+        <IconComponent size={size} strokeWidth={1.5} />
       </div>
   );
 };
-
 
 const App = () => {
   const [activeSection, setActiveSection] = useState('home');
@@ -78,7 +71,7 @@ const App = () => {
   };
 
   const heroContentRef = useRef(null);
-
+  const heroTitleRef = useRef(null);
   const scrollToSection = (sectionId) => {
     if (sectionRefs[sectionId] && sectionRefs[sectionId].current) {
       sectionRefs[sectionId].current.scrollIntoView({ behavior: 'smooth' });
@@ -96,17 +89,19 @@ const App = () => {
       }, 120);
       return () => clearTimeout(timeoutId);
     } else {
-      // Yazma bittikten sonra imleç yanıp sönmeye devam etsin
+      // İmleç yanıp sönmeye devam etsin (CSS ile)
     }
   }, [subtitleIndex, fullSubtitle]);
 
   useEffect(() => {
     if (heroContentRef.current) {
-      const [h1, p, buttonsContainer] = heroContentRef.current.children;
-      gsap.set([h1, p, buttonsContainer], { autoAlpha: 0, y: 50 });
-      gsap.to([h1, p, buttonsContainer], {
-        autoAlpha: 1, y: 0, duration: 0.8, stagger: 0.2, ease: 'power3.out', delay: 0.5,
-      });
+      const children = Array.from(heroContentRef.current.children);
+      if (children.length >=3) {
+        gsap.set(children, { autoAlpha: 0, y: 50 });
+        gsap.to(children, {
+          autoAlpha: 1, y: 0, duration: 0.8, stagger: 0.2, ease: 'power3.out', delay: 1.5,
+        });
+      }
     }
   }, []);
 
@@ -164,19 +159,18 @@ const App = () => {
     { id: 'contact', label: 'İletişim', icon: <Mail size={18} /> },
   ];
 
-  // GÜNCELLENMİŞ socialLinks DİZİSİ (E-posta da eklenecek)
   const socialLinks = [
     { href: "https://www.linkedin.com/in/aleyna-ge%C3%A7it-727a1529a/", icon: <Linkedin />, label: "LinkedIn" },
     { href: "https://github.com/Alillaa", icon: <Github />, label: "GitHub" },
     { href: "https://x.com/aleynagecit_", icon: <Twitter />, label: "Twitter" },
     { href: "https://www.instagram.com/", icon: <Instagram />, label: "Instagram" },
-    // { href: "mailto:aleynagecit4550@gmail.com", icon: <Mail />, label: "E-posta" }, // İsteğe bağlı olarak buraya da eklenebilir
+    { href: "mailto:aleynagecit4550@gmail.com", icon: <Mail />, label: "E-posta" },
   ];
 
   const [backgroundElements, setBackgroundElements] = useState([]);
   useEffect(() => {
     const generateElements = () => {
-      const numberOfElements = window.innerWidth < 768 ? 2 : 3;
+      const numberOfElements = window.innerWidth < 768 ? 1 : 2;
       setBackgroundElements(
           Array.from({ length: numberOfElements }, (_, index) => (
               <AnimatedElement key={`anim-${index}-${Date.now()}`} type={index % 2 === 0 ? 'butterfly' : 'flower'} />
@@ -196,17 +190,52 @@ const App = () => {
     };
   }, []);
 
+  // PROJELER DİZİSİ RESİM YOLLARIYLA GÜNCELLENDİ
   const projectsData = [
-    { title: 'Mini Soru Bankası', desc: 'Kullanıcıların çeşitli konularda sorular oluşturup pratik yapabileceği interaktif bir soru bankası platformu.', img: process.env.PUBLIC_URL + '/img/soru-bankasi.png', tags: ['Python', 'PyQt5', 'QtDesigner'], githubLink: 'https://github.com/Alillaa/soru_bankasi', demoLink: null },
-    { title: 'Kişisel Asistanım', desc: 'Çeşitli günlük aktiviteleri takip etmeye ve yönetmeye yardımcı olan kişisel asistan uygulaması.', img: process.env.PUBLIC_URL + '/img/kisisel-asistan.png', tags: ['Python', 'PyQt5', 'QtDesigner'], githubLink: 'https://github.com/Alillaa/kisisel_asistan', demoLink: null },
-    { title: 'Not Defteri', desc: 'Kullanıcıların hızlıca notlar almasını ve düzenlemesini sağlayan, çiçek temalı bir not defteri uygulaması.', img: process.env.PUBLIC_URL + '/img/not-defteri.jpg', tags: ['Python', 'PyQt5', 'QtDesigner'], githubLink: 'https://github.com/Alillaa/not_defteri', demoLink: null },
-    { title: 'Kişisel Portfolyo Sitesi', desc: 'React, Tailwind CSS ve GSAP animasyonları ile kendimi ve çalışmalarımı tanıttığım bu interaktif web sitesi.', img: process.env.PUBLIC_URL + '/img/portfolyo-sitem.png', tags: ['React', 'Tailwind', 'GSAP', 'Kişisel'], githubLink: 'https://github.com/aleynagecit/portfolyo-react', demoLink: '#' },
+    {
+      title: 'Mini Soru Bankası',
+      desc: 'Kullanıcıların çeşitli konularda sorular oluşturup pratik yapabileceği interaktif bir soru bankası platformu.',
+      img: soruBankasiImg, // İçe aktarılan resmi kullan
+      tags: ['Python', 'PyQt5', 'QtDesigner'],
+      githubLink: 'https://github.com/Alillaa/soru_bankasi',
+      demoLink: null
+    },
+    {
+      title: 'Kişisel Asistanım',
+      desc: 'Çeşitli günlük aktiviteleri takip etmeye ve yönetmeye yardımcı olan kişisel asistan uygulaması.',
+      img: gunlukImg, // İçe aktarılan resmi kullan
+      tags: ['Python', 'PyQt5', 'QtDesigner'],
+      githubLink: 'https://github.com/Alillaa/kisisel_asistan',
+      demoLink: null
+    },
+    {
+      title: 'Not Defteri',
+      desc: 'Kullanıcıların hızlıca notlar almasını ve düzenlemesini sağlayan, çiçek temalı bir not defteri uygulaması.',
+      img: notDefteriImg, // İçe aktarılan resmi kullan
+      tags: ['Python', 'PyQt5', 'QtDesigner'],
+      githubLink: 'https://github.com/Alillaa/not_defteri',
+      demoLink: null
+    },
+    {
+      title: 'Kişisel Portfolyo Sitesi',
+      desc: 'React, Tailwind CSS ve GSAP animasyonları ile kendimi ve çalışmalarımı tanıttığım bu interaktif web sitesi.',
+      img: webImg, // İçe aktarılan resmi kullan
+      tags: ['React', 'HTML', 'CSS'],
+      githubLink: 'https://github.com/Alillaa/aleyna_gecit_',
+      demoLink: '#'
+    },
   ];
 
-  const heroShapes = [
-    { initialX: '10vw', initialY: '20vh', delay: 0.2 }, { initialX: '80vw', initialY: '30vh', delay: 0.4 },
-    { initialX: '40vw', initialY: '75vh', delay: 0.6 },
+  const pastelTechIconsData = [
+    { icon: Code, size: 40, color: 'rgba(251, 146, 158, 0.7)', initialX: '15vw', initialY: '25vh', delay: 0.1 },
+    { icon: Cpu, size: 30, color: 'rgba(196, 181, 253, 0.7)', initialX: '80vw', initialY: '15vh', delay: 0.3 },
+    { icon: GitBranch, size: 35, color: 'rgba(167, 243, 208, 0.7)', initialX: '5vw', initialY: '70vh', delay: 0.5 },
+    { icon: Binary, size: 25, color: 'rgba(147, 197, 253, 0.7)', initialX: '75vw', initialY: '80vh', delay: 0.2 },
+    { icon: Layers, size: 45, color: 'rgba(253, 224, 71, 0.6)', initialX: '50vw', initialY: '10vh', delay: 0.4 },
+    { icon: Puzzle, size: 30, color: 'rgba(252, 165, 165, 0.7)', initialX: '30vw', initialY: '55vh', delay: 0.6 },
+    { icon: Settings2, size: 35, color: 'rgba(199, 210, 254, 0.7)', initialX: '65vw', initialY: '45vh', delay: 0.1 },
   ];
+
 
   return (
       <div className={`font-sans text-gray-800 dark:text-gray-200 bg-gradient-to-br from-rose-50 via-purple-50 to-green-50 dark:from-slate-900 dark:to-slate-800 min-h-screen transition-colors duration-500 overflow-x-hidden relative`}>
@@ -219,7 +248,7 @@ const App = () => {
             <div className="flex items-center justify-between h-16">
               <div className="flex items-center">
                 <OriginalFlowerSVG className="w-8 h-8 text-pink-500 dark:text-pink-400 mr-2" />
-                <span className="text-xl font-bold text-pink-600 dark:text-pink-400">Aleyna Geçit</span>
+                <span className="text-xl font-bold text-purple-600 dark:text-purple-400">Aleyna Geçit</span>
               </div>
               <nav className="hidden md:flex space-x-1">
                 {navLinks.map(link => (
@@ -276,15 +305,21 @@ const App = () => {
 
         <main className="pt-16 relative z-10">
           <section ref={sectionRefs.home} id="home" className="min-h-screen flex items-center justify-center relative bg-gradient-to-br from-rose-100 via-purple-100 to-green-100 dark:from-slate-800 dark:to-slate-700 p-8 overflow-hidden">
-            {heroShapes.map((shape, index) => (
-                <HeroBackgroundShape key={index} initialX={shape.initialX} initialY={shape.initialY} delay={shape.delay} />
+            {pastelTechIconsData.map((data, index) => (
+                <PastelTechIcon
+                    key={index}
+                    icon={data.icon}
+                    initialX={data.initialX}
+                    initialY={data.initialY}
+                    size={data.size}
+                    color={isDarkMode ? data.color.replace(', 0.7)', ', 0.4)') : data.color}
+                    delay={data.delay}
+                />
             ))}
-            <OriginalFlowerSVG className="w-48 h-48 text-rose-200 dark:text-rose-800 opacity-20 absolute top-10 right-10 transform rotate-12 -z-10 hidden lg:block transition-all duration-500 hover:opacity-30 hover:scale-105" />
-            <OriginalButterflySVG className="w-32 h-32 text-purple-200 dark:text-purple-800 opacity-15 absolute bottom-20 left-10 transform -rotate-12 -z-10 hidden lg:block transition-all duration-500 hover:opacity-25 hover:scale-105" />
 
             <div ref={heroContentRef} className="text-center z-20 bg-white/70 dark:bg-slate-800/80 backdrop-blur-sm p-8 md:p-12 rounded-xl shadow-2xl relative">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-4 opacity-0" style={{ transform: 'translateY(50px)' }}>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600 dark:from-pink-400 dark:to-pink-500">
+              <h1 ref={heroTitleRef} className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-4 opacity-0" style={{ transform: 'translateY(50px)' }}>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-sky-500 to-green-400 dark:from-purple-400 dark:via-sky-400 dark:to-green-400">
                 Aleyna Geçit
               </span>
               </h1>
@@ -307,7 +342,6 @@ const App = () => {
           </section>
 
           <section ref={sectionRefs.about} id="about" className="py-16 sm:py-24 bg-white dark:bg-slate-800/70">
-            {/* ... Ben Kimim? içeriği aynı ... */}
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
               <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 relative">
                 <span className="relative z-10">Ben Kimim?</span>
@@ -460,7 +494,6 @@ const App = () => {
             </div>
           </section>
 
-          {/* İLETİŞİM BÖLÜMÜ GÜNCELLENDİ (E-POSTA VE TELEFON BUTONLARI) */}
           <section ref={sectionRefs.contact} id="contact" className="py-16 sm:py-24 bg-gradient-to-br from-rose-50 via-purple-50 to-green-50 dark:from-slate-900 dark:to-slate-800">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
               <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 relative">
@@ -472,7 +505,6 @@ const App = () => {
                   Benimle çalışmak, bir proje hakkında konuşmak veya sadece merhaba demek isterseniz, aşağıdaki yöntemlerden biriyle bana ulaşabilirsiniz.
                 </p>
 
-                {/* E-POSTA VE TELEFON BUTONLARI */}
                 <div className="mb-8 text-center flex flex-col sm:flex-row sm:justify-center sm:space-x-4 space-y-4 sm:space-y-0">
                   <a
                       href="mailto:aleynagecit4550@gmail.com"
@@ -481,7 +513,7 @@ const App = () => {
                     <Mail size={20} className="mr-2" /> E-posta Gönder
                   </a>
                   <a
-                      href="tel:+90XXXXXXXXXX" // KENDİ TELEFON NUMARANIZI GİRİN
+                      href="tel:05330123448"
                       className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg shadow-sm text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all transform hover:scale-105 w-full sm:w-auto"
                   >
                     <Phone size={20} className="mr-2" /> Telefonla Ulaşın
