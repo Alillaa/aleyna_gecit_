@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
+// Gerekli tüm ikonların import edildiğinden emin olalım:
 import {
   Home, User, Code, Mail, Linkedin, Github, Twitter, Menu, X, Sun, Moon,
   ChevronsDown, ArrowUpCircle, Sparkles, Send, MapPin, CalendarDays, Globe,
@@ -12,12 +13,52 @@ import {
 // Dosya yapınıza göre import yolları:
 import AnimatedElement from './components/AnimatedElement/AnimatedElement.js';
 import { ButterflySVG as OriginalButterflySVG, FlowerSVG as OriginalFlowerSVG } from './components/SVGIcons/SVGIcons.js';
-
-// YENİ EKLENEN RESİM IMPORTLARI
 import webImg from './resim/web.png';
 import notDefteriImg from './resim/not_defteri.png';
 import soruBankasiImg from './resim/soru_bankasi.png';
 import gunlukImg from './resim/gunluk.png';
+
+// Hero bölümü için yeni pastel teknoloji ikonu bileşeni
+const PastelTechIcon = ({ icon: IconComponent, initialX, initialY, size, color, delay }) => {
+  const iconRef = useRef(null);
+
+  useEffect(() => {
+    const el = iconRef.current;
+    if (!el) return;
+
+    gsap.set(el, {
+      x: initialX,
+      y: initialY,
+      scale: 0,
+      opacity: 0,
+    });
+
+    gsap.to(el, {
+      scale: 1,
+      opacity: gsap.utils.random(0.4, 0.8), // Opaklık biraz artırıldı
+      duration: 1.5,
+      delay: delay + gsap.utils.random(0, 1.5),
+      ease: 'power2.out',
+    });
+
+    gsap.to(el, {
+      x: `+=${gsap.utils.random(-30, 30)}`,
+      y: `+=${gsap.utils.random(-30, 30)}`,
+      rotation: `+=${gsap.utils.random(-45, 45)}`,
+      duration: gsap.utils.random(25, 50),
+      repeat: -1,
+      yoyo: true,
+      ease: 'sine.inOut',
+      delay: delay + 1.5,
+    });
+  }, [initialX, initialY, size, color, delay]);
+
+  return (
+      <div ref={iconRef} className="absolute -z-10 pointer-events-none" style={{ color }}>
+        <IconComponent size={size} strokeWidth={1.5} />
+      </div>
+  );
+};
 
 
 const capabilitiesData = [
@@ -31,26 +72,16 @@ const technicalSkillsForBenKimim = [
   'C#', 'React', 'Java', 'JavaScript', 'HTML', 'CSS', 'SQL', 'Git', 'Fusion360', 'Python (PyQt5)'
 ];
 
-const PastelTechIcon = ({ icon: IconComponent, initialX, initialY, size, color, delay }) => {
-  const iconRef = useRef(null);
-
-  useEffect(() => {
-    const el = iconRef.current;
-    if (!el) return;
-    gsap.set(el, { x: initialX, y: initialY, scale: 0, opacity: 0 });
-    gsap.to(el, { scale: 1, opacity: gsap.utils.random(0.4, 0.8), duration: 1.5, delay: delay + gsap.utils.random(0, 1.5), ease: 'power2.out' });
-    gsap.to(el, {
-      x: `+=${gsap.utils.random(-30, 30)}`, y: `+=${gsap.utils.random(-30, 30)}`, rotation: `+=${gsap.utils.random(-45, 45)}`,
-      duration: gsap.utils.random(25, 50), repeat: -1, yoyo: true, ease: 'sine.inOut', delay: delay + 1.5,
-    });
-  }, [initialX, initialY, size, color, delay]);
-
-  return (
-      <div ref={iconRef} className="absolute -z-10 pointer-events-none" style={{ color }}>
-        <IconComponent size={size} strokeWidth={1.5} />
-      </div>
-  );
-};
+// Hero bölümü için pastel teknoloji ikonları verisi
+const pastelTechIconsData = [
+  { icon: Code, size: 40, color: 'rgba(251, 146, 158, 0.7)', initialX: '15vw', initialY: '25vh', delay: 0.1 },
+  { icon: Cpu, size: 30, color: 'rgba(196, 181, 253, 0.7)', initialX: '80vw', initialY: '15vh', delay: 0.3 },
+  { icon: GitBranch, size: 35, color: 'rgba(167, 243, 208, 0.7)', initialX: '5vw', initialY: '70vh', delay: 0.5 },
+  { icon: Binary, size: 25, color: 'rgba(147, 197, 253, 0.7)', initialX: '75vw', initialY: '80vh', delay: 0.2 },
+  { icon: Layers, size: 45, color: 'rgba(253, 224, 71, 0.6)', initialX: '50vw', initialY: '10vh', delay: 0.4 },
+  { icon: Puzzle, size: 30, color: 'rgba(252, 165, 165, 0.7)', initialX: '30vw', initialY: '55vh', delay: 0.6 },
+  { icon: Settings2, size: 35, color: 'rgba(199, 210, 254, 0.7)', initialX: '65vw', initialY: '45vh', delay: 0.1 },
+];
 
 const App = () => {
   const [activeSection, setActiveSection] = useState('home');
@@ -72,6 +103,7 @@ const App = () => {
 
   const heroContentRef = useRef(null);
   const heroTitleRef = useRef(null);
+
   const scrollToSection = (sectionId) => {
     if (sectionRefs[sectionId] && sectionRefs[sectionId].current) {
       sectionRefs[sectionId].current.scrollIntoView({ behavior: 'smooth' });
@@ -93,13 +125,14 @@ const App = () => {
     }
   }, [subtitleIndex, fullSubtitle]);
 
+  // HERO İÇERİK GİRİŞ ANİMASYONU - DELAY GÜNCELLENDİ
   useEffect(() => {
     if (heroContentRef.current) {
       const children = Array.from(heroContentRef.current.children);
       if (children.length >=3) {
         gsap.set(children, { autoAlpha: 0, y: 50 });
         gsap.to(children, {
-          autoAlpha: 1, y: 0, duration: 0.8, stagger: 0.2, ease: 'power3.out', delay: 1.5,
+          autoAlpha: 1, y: 0, duration: 0.8, stagger: 0.2, ease: 'power3.out', delay: 0.5, // GECİKME 1.5'TAN 0.5'E DÜŞÜRÜLDÜ
         });
       }
     }
@@ -190,7 +223,6 @@ const App = () => {
     };
   }, []);
 
-  // PROJELER DİZİSİ RESİM YOLLARIYLA GÜNCELLENDİ
   const projectsData = [
     {
       title: 'Mini Soru Bankası',
@@ -202,7 +234,7 @@ const App = () => {
     },
     {
       title: 'Kişisel Asistanım',
-      desc: 'Çeşitli günlük aktiviteleri takip etmeye ve yönetmeye yardımcı olan kişisel asistan uygulaması.',
+      desc: 'Çeşitli günlük aktiviteleri takip etmeye ve yönetmeye yardımcı olan kişisel asistan uygulaması. (Bu proje için "gunluk.png" kullanıldı)',
       img: gunlukImg, // İçe aktarılan resmi kullan
       tags: ['Python', 'PyQt5', 'QtDesigner'],
       githubLink: 'https://github.com/Alillaa/kisisel_asistan',
@@ -226,16 +258,6 @@ const App = () => {
     },
   ];
 
-  const pastelTechIconsData = [
-    { icon: Code, size: 40, color: 'rgba(251, 146, 158, 0.7)', initialX: '15vw', initialY: '25vh', delay: 0.1 },
-    { icon: Cpu, size: 30, color: 'rgba(196, 181, 253, 0.7)', initialX: '80vw', initialY: '15vh', delay: 0.3 },
-    { icon: GitBranch, size: 35, color: 'rgba(167, 243, 208, 0.7)', initialX: '5vw', initialY: '70vh', delay: 0.5 },
-    { icon: Binary, size: 25, color: 'rgba(147, 197, 253, 0.7)', initialX: '75vw', initialY: '80vh', delay: 0.2 },
-    { icon: Layers, size: 45, color: 'rgba(253, 224, 71, 0.6)', initialX: '50vw', initialY: '10vh', delay: 0.4 },
-    { icon: Puzzle, size: 30, color: 'rgba(252, 165, 165, 0.7)', initialX: '30vw', initialY: '55vh', delay: 0.6 },
-    { icon: Settings2, size: 35, color: 'rgba(199, 210, 254, 0.7)', initialX: '65vw', initialY: '45vh', delay: 0.1 },
-  ];
-
 
   return (
       <div className={`font-sans text-gray-800 dark:text-gray-200 bg-gradient-to-br from-rose-50 via-purple-50 to-green-50 dark:from-slate-900 dark:to-slate-800 min-h-screen transition-colors duration-500 overflow-x-hidden relative`}>
@@ -248,6 +270,7 @@ const App = () => {
             <div className="flex items-center justify-between h-16">
               <div className="flex items-center">
                 <OriginalFlowerSVG className="w-8 h-8 text-pink-500 dark:text-pink-400 mr-2" />
+                {/* HEADER BAŞLIĞI STİLİ GÜNCELLENDİ */}
                 <span className="text-xl font-bold text-purple-600 dark:text-purple-400">Aleyna Geçit</span>
               </div>
               <nav className="hidden md:flex space-x-1">
@@ -318,8 +341,9 @@ const App = () => {
             ))}
 
             <div ref={heroContentRef} className="text-center z-20 bg-white/70 dark:bg-slate-800/80 backdrop-blur-sm p-8 md:p-12 rounded-xl shadow-2xl relative">
+              {/* HERO BAŞLIĞI STİLİ GÜNCELLENDİ */}
               <h1 ref={heroTitleRef} className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-4 opacity-0" style={{ transform: 'translateY(50px)' }}>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-sky-500 to-green-400 dark:from-purple-400 dark:via-sky-400 dark:to-green-400">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-rose-500 to-fuchsia-600 dark:from-pink-400 dark:via-rose-400 dark:to-fuchsia-500">
                 Aleyna Geçit
               </span>
               </h1>
