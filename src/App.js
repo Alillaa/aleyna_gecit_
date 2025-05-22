@@ -246,10 +246,16 @@ const App = () => {
         <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-slate-800/90 backdrop-blur-md shadow-sm transition-colors duration-500">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
-              <div className="flex items-center">
-                <OriginalFlowerSVG className="w-8 h-8 text-pink-500 dark:text-pink-400 mr-2" />
-                <span className="text-xl font-bold text-purple-600 dark:text-purple-400">Aleyna Geçit</span>
-              </div>
+              {/* LOGO VE İSİM KISMI TIKLANABİLİR HALE GETİRİLDİ */}
+              <button
+                  onClick={() => scrollToSection('home')}
+                  className="flex items-center focus:outline-none rounded-md p-1 -ml-1 group" // Odaklanma halkası sınıfları kaldırıldı
+                  aria-label="Ana Sayfaya Git"
+              >
+                <OriginalFlowerSVG className="w-8 h-8 text-pink-500 dark:text-pink-400 mr-2 group-hover:scale-110 transition-transform duration-300" />
+                <span className="text-xl font-bold text-purple-600 dark:text-purple-400 group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors duration-300">Aleyna Geçit</span>
+              </button>
+
               <nav className="hidden md:flex space-x-1">
                 {navLinks.map(link => (
                     <button
