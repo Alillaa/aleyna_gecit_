@@ -437,16 +437,63 @@ const App = () => {
               </div>
 
               <div className="pt-10 border-t border-gray-200 dark:border-slate-700">
-                <h3 className="text-2xl sm:text-3xl font-semibold text-center mb-8 text-pink-600 dark:text-pink-400">
+                <h3 className="text-2xl sm:text-3xl font-semibold text-center mb-10 text-pink-600 dark:text-pink-400">
                   Teknik Becerilerim
                 </h3>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-6 gap-y-4 max-w-4xl mx-auto">
-                  {technicalSkillsForBenKimim.map((skill, index) => (
-                      <div key={index} className="flex items-center text-gray-700 dark:text-gray-300 group p-2 hover:bg-pink-50 dark:hover:bg-slate-700/50 rounded-md transition-colors">
-                        <Play size={16} className="mr-2 text-green-500 dark:text-green-400 fill-green-500 dark:fill-green-400 transform group-hover:scale-125 transition-transform" />
-                        <span className="text-sm sm:text-base group-hover:text-pink-500 dark:group-hover:text-pink-400 transition-colors">{skill}</span>
-                      </div>
-                  ))}
+                {/* Grid yapısı korunuyor, eleman boyutları küçültülüyor */}
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-4 gap-y-6 max-w-5xl mx-auto"> {/* max-w-6xl idi max-w-5xl, gap-y-6 yapıldı */}
+                  {technicalSkillsForBenKimim.map((skill, index) => {
+                    let iconComponent;
+                    // İkon boyutunu küçülttük
+                    const iconSize = 18; // Önceki 22 idi, şimdi 18
+                    const iconBaseClasses = `mr-2 text-green-500 dark:text-green-400 transform group-hover:scale-110 transition-transform`;
+
+                    switch (skill.toLowerCase().trim()) {
+                      case 'c#':
+                        iconComponent = <Braces size={iconSize} className={iconBaseClasses} />;
+                        break;
+                      case 'react':
+                        iconComponent = <Orbit size={iconSize} className={iconBaseClasses} />;
+                        break;
+                      case 'java':
+                        iconComponent = <LucideFileCode size={iconSize} className={iconBaseClasses} />;
+                        break;
+                      case 'javascript':
+                        iconComponent = <Braces size={iconSize} className={iconBaseClasses} />;
+                        break;
+                      case 'html':
+                        iconComponent = <LucideFileCode size={iconSize} className={iconBaseClasses} />;
+                        break;
+                      case 'css':
+                        iconComponent = <Palette size={iconSize} className={iconBaseClasses} />;
+                        break;
+                      case 'sql':
+                        iconComponent = <Database size={iconSize} className={iconBaseClasses} />;
+                        break;
+                      case 'git':
+                        iconComponent = <GitBranch size={iconSize} className={iconBaseClasses} />;
+                        break;
+                      case 'fusion360':
+                        iconComponent = <Layers size={iconSize} className={iconBaseClasses} />;
+                        break;
+                      case 'python (pyqt5)':
+                        iconComponent = <Terminal size={iconSize} className={iconBaseClasses} />;
+                        break;
+                      default:
+                        iconComponent = <Code size={iconSize} className={iconBaseClasses} />;
+                    }
+                    return (
+                        <div
+                            key={index}
+                            // Kart padding'i biraz azaltıldı
+                            className="flex flex-col items-center text-center text-gray-700 dark:text-gray-300 group p-2 bg-white/40 dark:bg-slate-800/60 hover:bg-pink-50 dark:hover:bg-slate-700/80 rounded-lg shadow hover:shadow-md transition-all duration-300 min-h-[90px] justify-center" // p-3 idi p-2, min-h-[100px] idi min-h-[90px]
+                        >
+                          {iconComponent}
+                          {/* Yazı boyutu küçültüldü: text-base sm:text-lg */}
+                          <span className="text-base sm:text-lg mt-1 group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors break-words">{skill}</span> {/* mt-2 idi mt-1 */}
+                        </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -592,12 +639,7 @@ const App = () => {
         <footer className="bg-white dark:bg-slate-800/90 border-t border-gray-200 dark:border-slate-700 py-8 text-center relative z-10">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-center space-x-4 sm:space-x-6 mb-4">
-              {socialLinks.map(link => (
-                  <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.label}
-                     className="text-pink-600 hover:text-pink-800 dark:text-pink-400 dark:hover:text-pink-300 transition-colors p-1">
-                    {React.cloneElement(link.icon, { size: 24 })}
-                  </a>
-              ))}
+
             </div>
             <div className="flex items-center justify-center space-x-2 mb-2">
               <OriginalFlowerSVG className="w-5 h-5 text-rose-500 dark:text-rose-400" />
